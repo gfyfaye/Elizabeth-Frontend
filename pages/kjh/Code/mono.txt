@@ -1,0 +1,137 @@
+import spacy
+import gensim
+from gensim import corpora
+
+# Load the English language model for spaCy
+nlp = spacy.load('en_core_web_sm')
+
+# Load the transcript file
+with open('transcript.txt', 'r') as f:
+    transcript = f.read()
+
+# Preprocess the transcript file
+doc = nlp(transcript)
+processed_doc = [token.lemma_ for token in doc if not token.is_stop and token.is_alpha and len(token)>2]
+
+# Generate a list of relevant keywords and phrases using LDA topic modeling
+dictionary = corpora.Dictionary([processed_doc])
+corpus = [dictionary.doc2bow(text) for text in [processed_doc]]
+lda_model = gensim.models.ldamodel.LdaModel(corpus=corpus, id2word=dictionary, num_topics=1, passes=10)
+topics = lda_model.print_topics(num_words=5)
+
+# Construct a prompt for the language model
+prompt = "Write a monologue based on the following keywords and phrases: "
+for topic in topics:
+    prompt += topic[1]
+
+# Print the prompt
+print(prompt)
+
+
+pip install spacy
+
+python -m spacy download en_core_web_sm
+
+
+import io
+import os
+import pyaudio
+import time
+
+# Import the Google Cloud client library
+from google.cloud import speech_v1p1beta1 as speech
+
+# Set up the Speech-to-Text API client
+client = speech.SpeechClient()
+
+# Configure the audio stream
+streaming_config = speech.StreamingRecognitionConfig(
+    config=speech.RecognitionConfig(
+        encoding=speech.RecognitionConfig.AudioEncoding.LINEAR16,
+        sample_rate_hertz=16000,
+        language_code="en-US",
+        enable_word_time_offsets=True,
+    ),
+    interim_results=True,
+)
+
+# Define the keywords you want to spot
+keywords = ["hello", "goodbye", "thank you"]
+
+# Set up the microphone input stream
+p = pyaudio.PyAudio()
+stream = p.open(format=pyaudio.paInt16, channels=1, rate=16000, input=True, frames_per_buffer=1024)
+
+# Start the audio stream
+audio_generator = stream.read(1024)
+streaming_config.audio_config.audio_encoding = speech.RecognitionConfig.AudioEncoding.LINEAR16
+streaming_config.audio_config.sample_rate_hertz = 16000
+streaming_config.audio_config.enable_interim_results = True
+streaming_config.audio_config.enable_word_time_offsets = True
+requests = (
+    speech.StreamingRecognizeRequest(audio_content=audio_generator)
+)
+
+# Process the audio stream in real-time
+stream = client.streaming_recognize(streaming_config, requests=requests)
+for response in stream:
+    for result in response.results:
+        for alternative in result.alternatives:
+            text = alternative.transcript.lower()
+            for keyword in keywords:
+                if keyword in text:
+                    print(f"Found keyword '{keyword}' at {alternative.words[-1].start_time.seconds + alternative.words[-1].start_time.nanos * 1e-9} seconds.")
+
+
+
+
+-------------
+
+import io
+import os
+import pyaudio
+import time
+
+# Import the Google Cloud client library
+from google.cloud import speech_v1p1beta1 as speech
+
+# Set up the Speech-to-Text API client
+client = speech.SpeechClient()
+
+# Configure the audio stream
+streaming_config = speech.StreamingRecognitionConfig(
+    config=speech.RecognitionConfig(
+        encoding=speech.RecognitionConfig.AudioEncoding.LINEAR16,
+        sample_rate_hertz=8000,
+        language_code="en-US",
+        enable_word_time_offsets=True,
+    ),
+    interim_results=True,
+)
+
+# Define the keywords you want to spot
+keywords = ["hello", "goodbye"]
+
+# Set up the microphone input stream
+p = pyaudio.PyAudio()
+stream = p.open(format=pyaudio.paInt16, channels=1, rate=8000, input=True, frames_per_buffer=512)
+
+# Start the audio stream
+audio_generator = stream.read(512)
+streaming_config.audio_config.audio_encoding = speech.RecognitionConfig.AudioEncoding.LINEAR16
+streaming_config.audio_config.sample_rate_hertz = 8000
+streaming_config.audio_config.enable_interim_results = True
+streaming_config.audio_config.enable_word_time_offsets = True
+requests = (
+    speech.StreamingRecognizeRequest(audio_content=audio_generator)
+)
+
+# Process the audio stream in real-time
+stream = client.streaming_recognize(streaming_config, requests=requests)
+for response in stream:
+    for result in response.results:
+        for alternative in result.alternatives:
+            text = alternative.transcript.lower()
+            for keyword in keywords:
+                if keyword in text:
+                    print(f"Found keyword '{keyword}' at {alternative.words[-1].start_time.seconds + alternative.words[-1].start_time.nanos * 1e-9} seconds.")

@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<style>
+
+span {
+	font-size: 20px;
+	}
+
+.controller {
+  border: solid;
+  color: white;
+  background: green;
+  width: 100px;
+  height: 30px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 10px;
+  border-color: green;
+}
+
+.label{
+  border: solid;
+  color: white;
+  min-width = 30px
+}
+
+#brains {
+  border: solid;
+  color: white;
+  background: green;
+  width: 120px;
+  height: 30px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 10px;
+  border-color: green;
+}
+
+#outerDIV{
+	width: 80vw;
+    text-align: center;
+	padding: 15px 32px;
+	margin: auto;
+
+	}
+
+.balanceDIV{
+	width: 100%;
+	margin: auto;
+	}
+
+#settingsDIV{
+	width: 70wv;
+    text-align: left;
+	margin: auto;
+	}
+
+.inputs {
+  padding: 3px  3px  3px  3px ;
+  width: 60vw;
+  border: solid;
+  color: black;
+  border-width: 2px;
+  height:60px;
+  text-align: left;
+  font-size: 16px;
+  margin: 4px 2px;
+}
+
+.outputs {
+  padding: 5px  5px  5px  5px ;
+  width: 60vw;
+  border: solid;
+  border-width: 2px;
+  height:40vh;
+  text-align: left;
+  font-size: 16px;
+  margin: 4px 2px;
+} 
+
+.settings {
+  border: solid;
+  color: black;
+  border-width: 2px;
+  width: 40px;
+  height: 30px;
+  text-align: left;
+  font-size: 16px;
+  margin: 4px 2px;
+}
+
+</style>
+
+</head>
+<body>
+
+<script>  
+
+var myBrain = "";
+var myAnswer = "";
+
+
+function newBrain() {
+  if (document.getElementById("usr").value == "clear"){
+  	clearBrains(); 
+  	alert("Clearing Brains"); 
+  	return;}
+  brain = prompt("Name of new Brain");
+  if (brain != ""){
+  	existing = false 
+	opts = document.getElementById("brains").options
+	for (let step = 0; step < opts.length;  step++){
+		if (opts[step].value.toLowerCase() == brain.toLowerCase()){existing = true}}
+  if (existing){
+	console.log("Brain already exists: " + brain)
+	alert("The brain " + brain +" already exists. \n Please pick another name.")
+	}
+  else {
+  	system = document.getElementById("system").value 
+  	document.getElementById("system").value = ""
+    body = JSON.stringify({file: "theaterCHAT", content: {action: "newBrain", brain: brain, system: system}})
+    fetch("https://api.the-singularity-show.com/api/write/", {
+		method: "POST",
+		body: body,
+		headers: {"Content-Type": "application/json"}})
+   body = JSON.stringify({file: "brains", content: {brain: brain}})
+   fetch("https://api.the-singularity-show.com/api/append/", {
+		method: "POST",
+		body: body,
+		headers: {"Content-Type": "application/json"}})
+		
+		opt = document.createElement("option")
+		opt.value = brain
+		opt.innerHTML = brain
+		len = opts.length
+		opts.add(opt, opts[len]);
+	}
+  }
+}
+
+
+
+
+function loadBrains() {
+    fetch('https://api.the-singularity-show.com/api/read/', { 
+        method: 'POST',
+        body: JSON.stringify({file: "brains",}),
+        headers: {"Content-Type": "application/json"}})
+    .then(response => {
+        if (response.ok) {
+            return response.json();
+        } else {
+            throw new Error('File not found');
+        }
+    })
+    .then(response => {
+	brains = []
+	var saved_brains = response["content"]
+	opts =document.getElementById("brains").options
+	seen = []
+
+	for (let step = 0; step < saved_brains.length;  step++){
+		console.log(saved_brains[step])
+		next = saved_brains[step].brain
+		if (next in seen){
+			console.log("Ignoring brian: " +  saved_brains[step].brain)}	
+		else{
+			opt = document.createElement("option")
+			opt.value = saved_brains[step].brain
+			opt.innerHTML = saved_brains[step].brain
+			opts.add(opt, opts[opts.length])
+			console.log(opt)	
+			seen.push(next)
+			}	
+		}
+	})
+}
+
+function changeBrain(){
+	value = document.getElementById("brains").value
+	newBrain = value
+	console.log("Setting Brain " + newBrain)
+	myBrain=newBrain
+	document.getElementById("currentBrain").innerHTML = "chatGPT Trainer: " +myBrain
+}
+
+function clearBrains() {
+	body = JSON.stringify({file: "brains"})				
+	fetch("https://api.the-singularity-show.com/api/clear/", {
+		method: "POST",
+		body: body,
+		headers: {"Content-Type": "application/json"}
+		})
+	menu = document.getElementById("brains")
+	count = menu.options.length
+	console.log(opts)
+	for (let step = count-1; step > 0;  step--){
+		menu.remove(step)
+		}
+}
+	
+
+function rollBack() {
+	if(myBrain == ""){alert("You need to select a brain"); return;}
+	
+	body = JSON.stringify({file: "theaterCHAT", content: {action: "rollBack", "brain": myBrain}})				
+	fetch("https://api.the-singularity-show.com/api/write/", {
+		method: "POST",
+		body: body,
+		headers: {"Content-Type": "application/json"}
+		}
+ 	)
+}
+
+function thawBrain() {
+	if(myBrain == ""){alert("You need to select a brain"); return;}
+	
+	body = JSON.stringify({file: "theaterCHAT", content: {action: "thawBrain", "brain": myBrain}})				
+	fetch("https://api.the-singularity-show.com/api/write/", {
+		method: "POST",
+		body: body,
+		headers: {"Content-Type": "application/json"}
+		}
+ 	)
+}
+
+function freezeBrain() {
+	if(myBrain == ""){alert("You need to select a brain"); return;}
+	
+	body = JSON.stringify({file: "theaterCHAT", content: {action: "freezeBrain", "brain": myBrain}})				
+	fetch("https://api.the-singularity-show.com/api/write/", {
+		method: "POST",
+		body: body,
+		headers: {"Content-Type": "application/json"}
+		}
+ 	)
+}
+
+function showSystem() {
+	if(myBrain == ""){alert("You need to select a brain"); return;}
+
+	body = JSON.stringify({file: "theaterCHAT", content: {action: "showSystem", "brain": myBrain}})				
+	fetch("https://api.the-singularity-show.com/api/write/", {
+		method: "POST",
+		body: body,
+		headers: {"Content-Type": "application/json"}
+		}
+ 	)
+}
+
+function updateSystem() {
+	if(myBrain == ""){alert("You need to select a brain"); return;}
+
+	sys = document.getElementById("system").value
+	body = JSON.stringify({file: "theaterCHAT", content: {action: "updateSystem", "brain": myBrain, "system": sys}})				
+	fetch("https://api.the-singularity-show.com/api/write/", {
+		method: "POST",
+		body: body,
+		headers: {"Content-Type": "application/json"}
+		}
+ 	)
+}
+
+function runGPT() {
+	if(myBrain == ""){alert("You need to select a brain"); return;}
+	document.getElementById("answer").value = ""
+	usr = document.getElementById("usr").value
+	document.getElementById("usr").value = ""
+	sys = document.getElementById("system").value
+/* 
+	document.getElementById("system").value = ""
+ */
+	t = document.getElementById("temp").value
+	l = document.getElementById("leng").value
+	body = JSON.stringify({file: "theaterCHAT", content: {action: "runGPT", system: sys,usr: usr,  t: t, l: l, "brain": myBrain}})				
+ 	fetch("https://api.the-singularity-show.com/api/write/", {
+		method: "POST",
+		body: body,
+		headers: {"Content-Type": "application/json"}})
+	
+	document.getElementById("runGPT").style.backgroundColor ="red"
+	document.getElementById("runGPT").style.borderColor ="red"
+	}
+
+	
+async function fetchContent() {
+	console.log("Fetching Chat Response")
+    fetch('https://api.the-singularity-show.com/api/latest/', { 
+    		method: 'POST',
+    		body: JSON.stringify({file: "chatResponse"}),
+    		headers:  {"Content-Type": "application/json"}
+	})
+.then(response => {
+	console.log(response)
+    if (response.ok) {
+		json = response.json();
+		console.log(json)
+        return json
+    } else {
+        throw new Error('File not found');
+    }
+})
+.then(response => {
+        json_file = response["content"];
+        if (json_file.length==0) {
+            console.log(`Nothing in this file`);
+    	} 
+    	else {
+    	console.log(response)
+    	text = response["content"]["text"];
+    	target = response["content"]["target"]
+    	console.log(target)
+    	document.getElementById(target).value = text
+		document.getElementById("runGPT").style.backgroundColor ="green"
+		document.getElementById("runGPT").style.borderColor ="green"    	
+    	}}
+)}
+
+
+setInterval(fetchContent, 2000)
+
+
+</script>  
+
+<div id=outerDIV>
+
+<h1 align=center id=currentBrain> chatGPT Trainer: No Brain Selected</h1>
+
+<div class=balanceDIV>
+
+<textarea class=outputs id=answer></textarea>
+<br>
+<br>
+<textarea class="inputs" id=usr></textarea>
+</div>
+
+<br>
+<br>
+
+<div class=balanceDIV>
+
+<button  id="runGPT" class=controller value="OK" type="button" onclick="runGPT()">Answer</button>
+<button  id="runGPT" class=controller value="OK" type="button" onclick="showSystem()">Show Sys</button>
+<button  id="runGPT" class=controller value="OK" type="button" onclick="updateSystem()">Refine</button>
+<button  id="rollBack" class=controller value="OK" type="button" onclick="rollBack()">Roll Back</button>    
+<button  id="saveBrain" class=controller value="OK" type="button" onclick="newBrain()">New Brain</button> 
+<button  id="saveBrain" class=controller value="OK" type="button" onclick="freezeBrain()">Freeze</button> 
+<button  id="saveBrain" class=controller value="OK" type="button" onclick="thawBrain()">Thaw</button> 
+
+ <select name="Brains" id="brains" onchange="changeBrain()">
+  <option value="">Brains</option>
+</select> 
+
+</div><br>
+<br>
+<br>
+<textarea class="inputs" id=system style="height:240px;"> </textarea>
+<br>
+<br>
+
+
+<span>Temperature:</span> <input type="text" class="settings" id=temp><span></span>
+<span>Length: </span><input type="text" class="settings" id=leng>
+
+</div>
+
+<!-- 
+<button  id="saveBrain" class=controller value="OK" type="button" onclick="clearBrains()">Clear Brains</button> 
+ -->
+
+
+<script>loadBrains()</script>
+</body>
+</html>

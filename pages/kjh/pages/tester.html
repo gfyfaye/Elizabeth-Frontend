@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<style>
+
+span {
+	font-size: 20px;
+	}
+
+.controller {
+  border: solid;
+  color: white;
+  background: green;
+  width: 100px;
+  height: 30px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 10px;
+  border-color: green;
+}
+
+.label{
+  border: solid;
+  color: white;
+  min-width = 30px
+}
+
+#brains {
+  border: solid;
+  color: white;
+  background: green;
+  width: 120px;
+  height: 30px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 10px;
+  border-color: green;
+}
+
+#outerDIV{
+	width: 80vw;
+    text-align: center;
+	padding: 15px 32px;
+	margin: auto;
+
+	}
+
+.balanceDIV{
+	width: 100%;
+	margin: auto;
+	}
+
+#settingsDIV{
+	width: 70wv;
+    text-align: left;
+	margin: auto;
+	}
+
+.inputs {
+  padding: 3px  3px  3px  3px ;
+  width: 60vw;
+  border: solid;
+  color: black;
+  border-width: 2px;
+  height:60px;
+  text-align: left;
+  font-size: 16px;
+  margin: 4px 2px;
+}
+
+.outputs {
+  padding: 5px  5px  5px  5px ;
+  width: 60vw;
+  border: solid;
+  border-width: 2px;
+  height:40vh;
+  text-align: left;
+  font-size: 16px;
+  margin: 4px 2px;
+} 
+
+.settings {
+  border: solid;
+  color: black;
+  border-width: 2px;
+  width: 80px;
+  height: 30px;
+  text-align: left;
+  font-size: 16px;
+  margin: 4px 2px;
+}
+
+</style>
+
+</head>
+<body>
+
+<script>  
+
+
+function Done() {
+
+	id = document.getElementById("input").value
+	body = JSON.stringify({id: id})
+				
+	fetch("https://api.the-singularity-show.com/api/done/", {
+		method: "POST",
+		body: body,
+		headers: {"Content-Type": "application/json"}
+		}
+	)
+}
+
+function Ready() {
+
+	id = document.getElementById("input").value
+	body = JSON.stringify({id: id})
+				
+	fetch("https://api.the-singularity-show.com/api/ready/", {
+		method: "POST",
+		body: body,
+		headers: {"Content-Type": "application/json"}
+		}
+	)
+	.then(response => response.json())
+	.then(json =>  {if (!json["content"]) {console.log(json["content"])}
+		document.getElementById("output").value = json["content"]})
+}
+
+
+function Clearqueue() {
+
+	id = document.getElementById("input").value
+	body = JSON.stringify({id: id})
+				
+	fetch("https://api.the-singularity-show.com/api/clearqueue/", {
+		method: "POST",
+		body: body,
+		headers: {"Content-Type": "application/json"}
+		}
+	)
+}
+
+</script>  
+
+
+<div>
+
+<br>
+<br>
+<span>ID goes here:</span> <input type="text" class="settings" id=input><span></span>
+
+<span>Responses go here:</span> <input type="text" class="settings" id=output><span></span>
+
+<br>
+<button  id="runGPT" class=controller value="OK" type="button" onclick="Done()">Done</button>
+<button  id="runGPT" class=controller value="OK" type="button" onclick="Ready()">Ready</button>
+<button  id="runGPT" class=controller value="OK" type="button" onclick="Clearqueue()">Clearqueue</button>
+
+
+</div>
+
+</body>
+</html>

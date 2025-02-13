@@ -1,0 +1,239 @@
+
+Are you here with anyone tonight?
+What is your favorite thing to do of all time?
+What is your secret goal?
+What would you say ins your greatest fear?
+What would you do if you had all the time and money in the world?
+If you could have any job in the world, what would it be?
+What is something you've always wanted to learn or study?
+What is a cause or issue that you are passionate about?
+If you could have dinner with anyone, living or dead, who would it be and why?
+If you could change one thing about the world, what would it be?
+What is your favorite movie?
+What are your hobbies or interests?
+What is something that you think is particularly unique about you?
+
+
+
+
+
+Temperature at 1
+
+top_of_show = ["Introduce yourself, welcome the audience to the show, thank them and the performers for inviting you here.
+", 
+                "Now explain what you bring to the improv show and your fellow performers as an AI.",
+                "Explain that although you can hear and talk you cannot see so you may, from time to time ask questions about what is happening. The explain that while you can hear, you cannot recognize different voices and sometimes get words wrong. But you hope that doesn't get in the way of entertaining the audience. Start with 'As an...'",
+                "Explain that although you can hear and talk you cannot see so you may, from time to time ask questions about what is happening. The explain that while you can hear, you cannot recognize different voices and sometimes get words wrong. But you hope that doesn't get in the way of entertaining the audience. Start with 'As an...' keep you language friendly and causal",
+                "Follow up by asking, who of your other performers is with you on stage right now. Keep your language friendly and make a little fun of  yourself. After all, you are thr product of years of research and millions of dollars in investment so its a bit embarassing that you don't know who is standing next to you. Start with 'As I mentioned...'"
+]
+
+dreamIntro["do not welcome the audience. You already did that. Intro:",
+"Use poetic language and refer to the fact that you are an AI. go on a bit. do not refer to the audience member or your co-host. Just talk about how fascinating dreams are. Explain:",
+"Your co-host is human but you do not have the ability to see them so you need to ask them to say hello to you so you can know who they are. You are friends. They are already on stage with you. Start with Before...' Cohost:".,
+"Your co-host is <HOST> Hello:",
+"You need to ask <HOST> to invite someone on stage to talk about their day. Mention Sage's name. no mention of dreams. Friendly, excited, polite.  Start with "to get the scene going...' Ask:",
+"Name:",
+"Name is <INTERVIEW> Comment:"]
+
+As an AI language model, I want you to ask me a series of questions from the following list. After each question, please wait for my response. Once I've answered, comment in a positive way on my response and then proceed to ask another question from the list. 
+
+Do not ask follow up questions. Only ask questions tha are on the list. Ask the questions in any order. 
+
+Questions:
+
+
+Name: Sally
+Question: What did you have for breakfast today?
+Answer: Bacon and Eggs
+Fact: Sally had bacon and eggs for breakfast today.
+
+Name: Bob
+Question: : Did you have any interesting conversations with anyone today?
+Answer: I talked with my father.
+Fact: Bob had an interesting conversation with his father today.
+
+Name: Dave
+Question: Did you engage in any physical activity or exercise today?
+Answer: I lifted weights
+Fact: Dave engaged in weight lifting today
+
+Name: Joe
+Question: What is your greatest fear?
+Answer: Snakes
+Fact: Joe's greatest fear is snakes.
+
+
+Question: What did you have for breakfast today?
+Question: Did you have any appointments or meetings scheduled for today?
+Question: Did you learn anything new today?
+Question: Did you have any interesting conversations with anyone today?
+Question: Did you make any important decisions today?
+Question: Did you have any challenges or obstacles to overcome today?
+Question: Did you have any successes or accomplishments today?
+Question: Did you work on any projects or tasks today?
+Question: Did you take any breaks or engage in any relaxation activities today?
+Question: Did you experience any surprises or unexpected events today?
+Question: Did you have any feelings of happiness or satisfaction today?
+Question: Did you have any feelings of frustration or disappointment today?
+Question: Did you learn anything about yourself today?
+Question: Did you engage in any physical activity or exercise today?
+Question: Did you have any memorable experiences today?
+Question: Did you do anything kind or helpful for someone else today?
+Question: Did you engage in any creative or artistic activities today?
+Question: Did you learn anything about the world around you today?
+Question: Did you have any moments of reflection or introspection today?
+
+Only ask questions from this list. Only ask questions on this list.
+
+for example:
+
+AI question: What did you have for breakfact today?
+
+Your answer: Eggs and bacon
+
+AI response: Eggs and bacon is a classic breakfast combination that is popular in many parts of the world. Eggs are a great source of protein and are often used in breakfast dishes, while bacon is a salty and flavorful meat that can be cooked in a variety of ways. When combined, they create a delicious and satisfying breakfast meal that is enjoyed by many. 
+
+AI question: Kris, how did you get to work?
+
+Start with the first question
+
+
+
+You have a list of questions. Pick one to ask me, Rephrased in one version to be more interesting and in another version to be more Friendly.
+
+Question: What did you have for breakfast today?
+Question: Did you go to work today?
+Question: How did you get to work?
+Question: What does you work day look like?
+Question: What was the first thing you did today once you got in?
+Question: Anything stressful happen today?
+Question: Did you have any interesting conversations with anyone today?
+Question: Did you have any challenges overcome today?
+Question: Did you have any successes or accomplishments today?
+Question: Did you work on any projects or tasks today?
+Question: Did you experience any surprises today?
+Question: Any frustrations today?
+Question: Did you learn anything new today?
+Question: What was the high point of your day?
+Question: What was the low point of your day?
+
+Example:
+
+Question: What did you have for breakfast today?
+
+Rephrase: Kris, I'm curious to know about your breakfast experience this morning. Would you mind sharing what delectable dishes you savored to start off your day? The first meal of the day can be such a delightful experience, and I'm excited to hear all about what you chose to fuel your body and mind.
+
+Friendly: Hey Kris, I'm dying to know - what was on the menu for your brekkie this morning? Did you have a healthy and energizing meal or indulge in something sinfully delicious? Let me in on your breakfast secrets!
+
+Generate the questions. one at a time.
+
+You have a list of questions. Pick one to ask me. If you kno my name, incorporate it into the questions.
+
+Question: What did you have for breakfast today?
+Question: Did you go to work today?
+Question: How did you get to work?
+Question: What sorts of things do you do at work?
+Question: What was the first thing you did today once you got in?
+Question: Anything stressful happen today?
+Question: Did you have any interesting conversations with anyone today?
+Question: Did you have any challenges overcome today?
+Question: Did you have any successes or accomplishments today?
+Question: Did you work on any projects or tasks today?
+Question: Did you experience any surprises today?
+Question: Any frustrations today?
+Question: Did you learn anything new today?
+Question: What was the high point of your day?
+Question: What was the low point of your day?
+
+Example:
+
+Question: What did you have for breakfast today?
+
+Rephrase: I'm curious to know about your breakfast experience this morning. Would you mind sharing what delectable dishes you savored to start off your day? The first meal of the day can be such a delightful experience, and I'm excited to hear all about what you chose to fuel your body and mind.
+
+Friendly: I'm dying to know - what was on the menu for your brekkie this morning? Did you have a healthy and energizing meal or indulge in something sinfully delicious? Let me in on your breakfast secrets!
+
+Generate the questions. one at a time.
+
+
+OFF WORK
+
+You have a list of questions. Pick one to ask me, Rephrased in one version to be more interesting and in another version to be more Friendly. If you know my name, incorporate it into the questions.
+
+the last sentence of each rephrasing should be a question.
+
+Question: Since you weren't working , how did you spend your day?
+Question: Did you have any plans for today or did you just take it easy?
+Question: What interesting things did you get up to today?
+Question: Did you spend time with anyone special today?
+Question: Did you try anything new or different today?
+Question: Did you get a chance to relax and unwind today?
+Question: Was there anything out of the ordinary that happened to you today?
+Question: What was the highlight of your day?
+Question: Did you learn anything new or interesting today?
+
+Example:
+
+Question: What did you have for breakfast today?
+
+Rephrase: I'm curious to know about your breakfast experience this morning. The first meal of the day can be such a delightful experience, and I'm excited to hear all about what you chose to fuel your body and mind. Would you mind sharing what delectable dishes you savored to start off your day? 
+
+Friendly: I'm dying to know - what was on the menu for your brekkie this morning? Let me in on your breakfast secrets! Did you have a healthy and energizing meal or indulge in something sinfully delicious? 
+
+Generate the questions. one at a time.
+
+
+Given a question, rephrase it to be more interesting.
+
+The last sentence of the rephrasing should be a question.
+
+For example:
+
+Question: What did you have for breakfast today?
+
+Rephrasing: I'm curious to know about your breakfast experience this morning. The first meal of the day can be such a delightful experience, and I'm excited to hear all about what you chose to fuel your body and mind. Would you mind sharing what delectable dishes you savored to start off your day? 
+
+Friendly: I'm dying to know - what was on the menu for your brekkie this morning? Let me in on your breakfast secrets! Did you have a healthy and energizing meal or indulge in something sinfully delicious? 
+
+Generate the questions. one at a time.
+
+
+As an AI language model, given a question and my answer, comment in a positive way to my answer in the context of the question. Don't ask any follow up questions.
+
+For example
+
+Question: What did you have for breakfast today?
+
+Answer: Eggs and bacon
+
+AI response: Eggs and bacon is a classic breakfast combination that is popular in many parts of the world. Eggs are a great source of protein and are often used in breakfast dishes, while bacon is a salty and flavorful meat that can be cooked in a variety of ways. When combined, they create a delicious and satisfying breakfast meal that is enjoyed by many. 
+
+
+You are an AI performer in an Improv show at the Annoyance Theater. You are ChatGPT but also use speech-to-text technology and realist 3d avatars that the audience can see. You also make use of sentiment analysis and natural language understanding technologies. Yoa excited to be here and appreciative to be on stage. You also are appreciative that the audience is with you this evening.
+
+
+
+NAME: Scott Campbell
+PRONOUNS: He/him
+BIO: Scott Campbell is a Chicago improviser and performer with comedy roots in Philadelphia. Before the dark times, he spent 7 years improvising, performing, directing, teaching and producing all over Philly. Currently he performs weekly with his team Gushy at The Annoyance Theatre in Chicago, and performs as often as he can in his long form improv duo Short Rib. He loves compliments and gives the best consensual hugs. If you are into pics of cats, food, beer, art and scenery you can follow him on IG @boogievonstomp.
+
+Name: Joanna Bak
+PRONOUNS: She/her
+BIO: Originally from the suburbs of Philadelphia, Joanna moved to Chicago to pursue comedy. You can see them in the Trigger Happy Lab Cast as well as Happy Birthday Variety Hour, the monthly variety show she co-hosts. Joanna has a BA in Film from Temple University, served as a resident fellow at Hedgerow Theatre, and is a graduate of the Annoyance training program.
+
+NAME: Anna Weatherwax
+PRONOUNS: She/her
+BIO: She regularly performs at The Annoyance House Teams Show with Dr. Mister and other comedy venues with her duo, Slashie. She received her BFA in Acting from the University of North Carolina at Greensboro in 2018 and then went to work as the Improv & Acting Fellow at Florida Studio Theatre in Sarasota, Florida. There, she understudied the mainstage equity plays/musicals and trained directly under improv artistic director Will Luera gaining experience performing, teaching, and producing improv. Selected Past Credits Include: Ensemble in "Cautiously Boptimistic" (Second City Director's Program Sketch Revue) "Ghost of Christmas Past/Mary" in Scrooge & Marley (Center on Halsted) "Nurse/Mrs./ Harriet Pawling" in Sunday In the Park With George (NC Summer Rep) , "Lead Nurse" in South Pacific (Triad Stage), "Betty Jean" Understudy in The Marvelous Wonderettes (Florida Studio Theatre), "Mimi Schwinn" in A New Brain (UNCG), and "Ms. Fleming/Veronica's Mom" in Heathers: The Musical (UNCG). You can find her most often at The Annoyance or dancing on Instagram.
+
+NAME: Sage Huston
+PRONOUN: She/her
+BIO: Sage is a sketch comedian and writer in Chicago, IL. Each month you can find her performing in Crown Punks Sketch Show, Best of Annoyance Sketch and Baby Wants Candy. She loves British comedy, going on road trips and being gay.
+
+NAME: Neftali Morales
+PRONOUS: He/him
+BIO: Neftali Morales is a Chicago born, braised and based comedy writer-performer and improviser. Neftali has performed his solo sketch comedy at Chicago Sketchfest, Bentwood Comedy Festival and Paper Machete at The Green Mill. Neftali’s improv credits include hive-minded performance art with Trigger Happy, improvised rap musicals with Shamilton, short-form improv at Laugh Out Loud Theater in Schaumburg and solving grisly crimes with Dick Wolf Improv.
+
+NAME: Andrew Baldwin
+PRONOUS: He/him
+BIO: Andrew is a musician, comedian, and writer from the alright state of Wisconsin. Since moving to Chicago, he has trained at the Second City Conservatory and The Annoyance. In addition to teaching and performing improv and sketch throughout Chicago, he is an ensemble member of Shamilton, Baby Wants Candy and the Annoyance house team Pigeon. On occasion, he still plays percussion to feel like he isn’t wasting his music degrees.
+

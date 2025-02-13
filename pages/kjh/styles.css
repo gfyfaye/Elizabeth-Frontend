@@ -1,0 +1,92 @@
+body {
+	width: 100vw;
+	background-color:black;
+	}
+	
+.av {
+    width:70vw; 
+    left:10vw; 
+    position:absolute
+}
+	
+#avatar_container {
+	position:relative; 
+	top:50px;
+  	width: 100vw;
+  	}
+	
+
+#sitepal_window {
+	width: 20vw;
+	height: 60vh;
+	left:4vw;
+	position:absolute; 
+	background-color:#11ffee00;
+	z-index:2;
+	}
+
+	
+#background_div{
+	width:100vw;
+	position:absolute; 
+	z-index:0;
+	}
+	
+#background_img{
+	width:100vw;
+	}
+	
+#dynamic_div{
+	width:100%;
+	position:absolute; 
+	visibility: hidden;
+	z-index:1;
+ }
+ 
+#dynamic_img{
+  	object-fit: contain;
+  	
+	}
+
+#inset_div{
+	width:30vw;
+	height:30vh;
+	position:absolute; 
+	left:3vw;
+	top:3vh;
+	z-index:4;
+	object-fit: contain;
+	background-color:black;
+	border-style: solid;
+  	border-color: white;
+	visibility: hidden;
+}	
+	
+#inset_img{
+	width:100%;
+  	z-index:1;
+
+	}
+	
+#chyron_div {
+	position: absolute; 
+	z-index:3; 
+	left:5vw; 
+	top:75%; 
+	width:80vw;
+	visibility: hidden;
+	}
+	
+#chyron_image {
+	width:80%; 
+	}
+	
+#chyron_marquee {
+	position:absolute; 
+	padding-left:5vw; 
+	padding-right:10%;
+	top:41%; 
+	z-index:3;
+	width:72vw
+	}
+

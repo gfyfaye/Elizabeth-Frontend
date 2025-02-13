@@ -1,0 +1,26 @@
+{
+    "file": "string", 
+    "content": [
+        {
+            "text": "string",
+            "gaze": "left" | "right" |"center" | "up" | "down",
+            "expression": "None" "ClosedSmile" | "OpenSmile" | "Sad" | "Angry | "Fear" | "Disgust" | "Surprise" | "Thinking" | "Blush" | "LeftWink" | "RightWink" | "Blink" | "Scream",
+            "voice" {
+            	"effect": "D" | "P" | "S" | "R" | "T" | "W",
+                "intensity": int,
+			    "array": [int, int, int]
+            }
+            "background": <URL>,
+            "image1": <URL>,
+            "image2": <URL>,
+            "mode": "news" | "flow" | None,
+            "continue": True | False | None,
+            "chyron_text": str,
+            "switch": int
+            "avatar": {
+                "id": "#######",
+                "makeVisible": bool 
+            }
+        }, 
+    ]
+}

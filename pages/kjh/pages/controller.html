@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+.controller {
+  border: solid;
+  color: white;
+  background: green;
+  width: 180px;
+  height: 60px;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 10px;
+  border-color: green;
+}
+
+.trigger {
+  border: solid;
+  color: white;
+  background: blue;
+  width: 180px;
+  height: 60px;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 10px;
+  border-color: blue;
+}
+
+#mainDIV{
+    text-align: center;
+	width: 80vw;
+	padding: 15px 32px;
+	margin: auto;
+}
+
+#statusContainerDIV{
+    text-align: left;
+	width: 80vw;
+	padding: 15px 32px;
+	margin: auto;
+
+	}
+	
+#statusButtonDIV{
+    text-align: left;
+	width: 100vw;
+	padding: 15px 32px;
+	margin: auto;
+
+	}
+
+#statusDIV{
+    text-align: left;
+	width: 80%;
+	height: 25px;
+	border: solid;
+	background: white;
+	padding: 15px 32px;
+	margin: auto;
+}
+
+#statusButton{
+
+  border: solid;
+  border-color: black;
+  color: white;
+  background: #ff4d4d;
+  width: 220px;
+  height: 60px;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 10px;
+  border-color: #ff4d4d;
+}
+
+  body{
+   }
+}
+}
+</style>
+
+</head>
+<body>
+
+<script>  
+
+function changeScene(avatar) {
+    if (avatar=="human") {
+        loadSceneByID(2756583)
+    } else {
+        loadSceneByID(2756584)
+    } 
+}
+function controller(button) {
+
+	console.log(button.innerHTML)
+
+	fetch("https://api.the-singularity-show.com/api/write/", {
+		method: "POST",
+		body: JSON.stringify({file: "control", content: {"signal": button.innerHTML}}),
+		headers: {"Content-Type": "application/json"}
+		}
+	  )
+	const collection = document.getElementsByClassName("controller");
+	for (let i = 0; i < collection.length; i++) 
+	{
+	collection[i].style.backgroundColor = "green";
+	collection[i].style.borderColor = "green";
+	}
+	button.style.background="#ff4d4d"
+	button.style.borderColor="#ff4d4d"
+	document.getElementById("statusDIV").innerHTML="Activating Scene = " + button.innerHTML
+}
+
+function trigger(button) {
+
+	console.log(button.innerHTML.toLowerCase())
+
+	fetch("https://api.the-singularity-show.com/api/write/", {
+		method: "POST",
+		body: JSON.stringify({file: button.innerHTML.toLowerCase(), content: {"trigger": button.innerHTML}}),
+		headers: {"Content-Type": "application/json"}
+		}
+	  )
+}
+
+function statusQuery(){
+	status = fetch("https://api.the-singularity-show.com/api/read/", {
+		method: "POST",
+		body: JSON.stringify({file: "control"}),
+		headers: {"Content-Type": "application/json"} 
+	})
+    .then(response => {
+        if (response.ok) {
+            return response.json();
+        } else {
+            throw new Error('File not found');
+        }
+    })
+    .then(response => {
+        var status = response?.content[0]["signal"]
+    document.getElementById("statusDIV").innerHTML="Current Scene = " + status
+    const collection = document.getElementsByClassName("controller");
+	for (let i = 0; i < collection.length; i++) 
+	{
+		console.log(collection[i].innerHTML)
+	  if (collection[i].innerHTML == status){
+		  collection[i].style.backgroundColor = "#ff4d4d";
+		  collection[i].style.borderColor = "#ff4d4d";
+		}
+	  else {
+	  collection[i].style.background="green"
+	  collection[i].style.borderColor="green"
+		 }
+	}
+  })
+}
+
+
+
+</script>  
+
+<h1 align=center> RoboTheater Controller</h1>
+
+<div id=mainDIV>
+<button  class=controller value="OK" type="button" onclick="controller(this)">Intro</button>  
+<button  class=controller value="OK" type="button" onclick="controller(this)">Dada</button>  
+<button  class=controller value="OK" type="button" onclick="controller(this)">Dream</button>   
+<button  class=controller value="OK" type="button" onclick="controller(this)">Armando</button>  
+<button  class=controller value="OK" type="button" onclick="controller(this)">Stand, lean...</button> 
+<button  class=controller value="OK" type="button" onclick="controller(this)">Blind Line</button>  
+<button  class=controller value="OK" type="button" onclick="controller(this)">Conversation</button>  
+</div>
+
+<br>
+<div id=statusContainerDIV>
+
+<div id="statusDIV"></div>
+
+<div id=statusButtonDIV>
+<button id="statusButton" value="OK" type="button" onclick="statusQuery()">Status</button> 
+</div>
+</div>
+ 
+ <div id=mainDIV>
+<button  class=trigger value="OK" type="button" onclick="trigger(this)">Line</button>  
+<button  class=trigger value="OK" type="button" onclick="trigger(this)">Two</button>  
+<button  class=trigger value="OK" type="button" onclick="trigger(this)">Three</button>   
+<button  class=trigger value="OK" type="button" onclick="trigger(this)">Four</button>  
+<button  class=trigger value="OK" type="button" onclick="trigger(this)">Five</button>  
+<button  class=trigger value="OK" type="button" onclick="trigger(this)">Sex</button>   
+</div>
+</body>
+</html>

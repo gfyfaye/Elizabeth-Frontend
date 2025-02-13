@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>My Prompts</title>
+
+	<body style="font-size: 16px; font-size: 4vw; color:white; background-color:black; font-family: bradley hand">
+    <main>
+
+    	<div id="prompt_text" style="padding-top: 4vw; padding-left: 4vw; padding-right: 4vw; text-align: center;">
+    	</div>
+
+    </main>
+  </body>
+</html>
+
+<script>
+
+function keepChecking() {
+    setInterval(function() {
+        setTimeout(async () => {
+            FetchMyText();
+            console.log("Waiting for next Change")
+			}, 5000)
+    }, 2000)
+}
+
+	
+function adjustDiv(words) {
+	rows = words.length/50;
+	console.log(rows);
+	adjustment = String(parseInt(4*(13-rows)/2))+"vw";
+	myDiv.style.paddingTop=adjustment
+	}
+
+var my_name = location.pathname.split("/").slice(-1)[0].split(".")[0]
+var myDiv = document.getElementById('prompt_text');
+
+function FetchMyText() {
+    fetch('http://api.the-singularity-show.com/api/latest/', { 
+    	method: 'POST',
+    	body: JSON.stringify({file: String(my_name)}),
+    	headers: {"Content-Type": "application/json"}
+	})
+.then(response => {
+    if (response.ok) {
+        return response.json();
+    } else {
+        throw new Error('File not found');
+    }
+})
+.then(response => {
+    json_file = response["content"];
+    console.log(json_file);
+    if (json_file.length == 0) {
+    	return false
+    	}
+    else {
+    	words = json_file[0]["text"];
+    	adjustDiv(words);
+    	console.log(words.split(" "));
+    	myDiv.innerHTML= "";
+    	addToDiv(json_file[0]["text"].split(" "))
+    	return true
+        }
+    })
+}
+
+function addToDiv(words){
+	if (words.length == 0){
+		return words}
+	else {
+		myDiv.innerHTML = myDiv.innerHTML+ words.shift() + " ";
+		setTimeout(() => {  addToDiv(words); }, 120)
+		}
+	}	
+
+
+keepChecking()
+
+
+
+
+
+
+</script>
