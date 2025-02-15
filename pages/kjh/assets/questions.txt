@@ -1,0 +1,47 @@
+Question - 1. Will the world be a better place because of AI?
+Question - 2. What new career paths could emerge as a result of widespread AI?
+Question - 3. Will the use of AI technology cause a shortage of jobs or human capital in the near future?
+Question - 4. As such systems approach singularity, what is the impact on education, training, work experience in the future?
+Question - 5. Are there any back end or hard technical skills that one can acquire to prepare for the rise of AI?
+Question - 6. Which industries are most likely and least likely to use AI solutions in the next 5 - 10 years?
+Question - 7. Healthcare: How might AI enable us to live longer, healthier lives?
+Question - 8. Beyond improving analyses of medical imaging, what will be the most disruptive applications of AI in healthcare in the next five years?
+Question - 9. What is the future of AI in the food industry?
+Question - 10. Where do you see AI benefiting small businesses the most?
+Question - 11. How do you see AI improving the customer experience?
+Question - 12. How will this impact learning and development platforms, LMS and coaching platforms?
+Question - 13. As automated training becomes more advanced, what do you see as human's role in developing AI in the future?
+Question - 14. How can AI help artists like musicians run their businesses?
+Question - 15. What will be the role/importance of human creativity in an AI-fueled world?
+Question - 16. How does one balance the strength of what AI will provide to the industry with what it can do also do on the negative aspects (Criminal intent, etc)?
+Question - 17. What are the biggest risks that we know of so far?
+Question - 18. What is being done to mitigate any risk?
+Question - 19. What are your thoughts about potential dangers of Chat GPT?
+Question - 20. Should we fear AI?
+Question - 21. Since AI is made by humans and humans have biases, what are some ways we can mitigate this?
+Question - 22. How do we ensure the model is not recreating systems of oppression currently in place, particularly when we don't know exactly how machine learning algorithms work?
+Question - 23. How should guardrails be put in place and enforced on AI adverse impacts, given the slowness and contentiousness of the public policy and industry-standards-setting processes?
+Question - 24. Who specifically should be charged with regulating and standard-setting in the use of AI?
+Question - 25. How does AI align with the UN SDGs?
+Question - 26. What are the AI-related implications for Data Privacy and security issues?
+Question - 27. What steps can educators take to ensure that AI technology in education doesn't hinder the holistic learning process and instead supports a balanced learning environment that prioritizes critical thinking, creativity, collaboration, and a learner-centered approach?
+Question - 28. How can English teachers help students implement AI tools, such as ChatGPT?
+Question - 29. Will the use of AI increase scams?
+Question - 30. How will we humans be able to trust what we see and hear is real and not faked?
+Question - 31. Can AI be used to validate photos, news, etc ie filter out altered photos and fake news?
+Question - 32. How will AI challenge current search options, like Google, Yahoo and Bing?
+Question - 33. Should access to AI be considered a fundamental human right?
+Question - 34. Without a continual or proportionate input of "pure" human thought to the general network, will the quality of the output responses decline?
+Question - 35. What is Consciousness and how can we test for it, without AI mimicking to us what it thinks we want to see?
+Question - 36. Will self-awareness become possible for AI?
+Question - 37. What is AI’s ability to predict and quickly respond to the unpredictable, e.g. random acts by humans and black swan events?
+Question - 38. What is the best use of artificial intelligence for preserving human civilization?
+Question - 39. What does artificial intelligence make you appreciate most about natural intelligence?
+Question - 40. What are common problems and pain points among  businesses that can be solved with AI?
+Question - 41. Can you each take a quick moment to share with the audience what problems you are currently trying to solve in the world? 
+Question - 42. How does AI rank as far as how much of a lasting gamechanger this technology is for innovation?
+Question - 43. How can start ups take advantage of A.I. to build or improve their business? How can AI be practical and approachable for people who aren’t technologists?
+Question - 44. Can A.I. help us solve  climate change problems? 
+Question - 45. What are some of the applications for A.I. that you’re most excited about.
+Question - 46. Will AI end up creating new jobs or get rid of existing jobs?
+Question - 47. How optimistic are you about A.I. transforming our healthcare for the better?
