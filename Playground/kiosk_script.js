@@ -2,16 +2,18 @@ var avatarID;
 var voice_array;
 var waitingDirection;
 
-var json_file = [];
+var json_file = somespeech.json;
 var introspection_file;
 var curr_command = {};
 var curr_command_index=0;
 var speaking = false;
 var myTurn = false;
+var isFollowingMouse = false;
    
 function vh_sceneLoaded(sceneIndex, portal) {
     console.log("Initializing DEV");
-    followCursor(0);
+    sayText('Welcome to our text to speech A P I example', 3, 1, 3);
+
     // sleepMode();
     setInterval(function() {
         setTimeout(async () => {
@@ -29,6 +31,10 @@ function vh_sceneLoaded(sceneIndex, portal) {
             }
         }, 5000)
     }, 2000)
+    if (!isFollowingMouse) {
+        isFollowingMouse = true;
+        document.addEventListener('mousemove', trackMouse);
+    }
 }
 
 async function vh_audioStarted(portal) {
@@ -229,4 +235,30 @@ function changeScene(avatar) {
 function sleepMode() {
     change_gaze_direction("down")
     change_emotion("Blink")
+}
+function trackMouse(event) {
+    const mouseX = event.clientX;
+    const mouseY = event.clientY;
+
+    // Convert mouse coordinates to gaze direction
+    const gazeDirection = convertMouseToGaze(mouseX, mouseY);
+
+    // Set the gaze
+    setGaze(gazeDirection.yaw, gazeDirection.pitch, 100); // Assuming 100 is the default intensity
+}
+
+function convertMouseToGaze(mouseX, mouseY) {
+    // Get the dimensions of the viewport (or the area where the avatar is)
+    const viewportWidth = window.innerWidth;
+    const viewportHeight = window.innerHeight;
+
+    // Normalize mouse coordinates to -1 to 1
+    const normalizedMouseX = (mouseX / viewportWidth) * 2 - 1;
+    const normalizedMouseY = -((mouseY / viewportHeight) * 2 - 1); // Invert Y because screen Y increases downwards
+
+    // Assuming -1 to 1 maps to a range of -90 to 90 for yaw and -45 to 45 for pitch
+    const yaw = normalizedMouseX * 90;
+    const pitch = normalizedMouseY * 45;
+
+    return { yaw, pitch };
 }
