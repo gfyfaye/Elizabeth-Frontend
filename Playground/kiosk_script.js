@@ -1,264 +1,57 @@
-var avatarID;
-var voice_array;
-var waitingDirection;
-
-var json_file = somespeech.json;
-var introspection_file;
-var curr_command = {};
-var curr_command_index=0;
+var json_file = [];
 var speaking = false;
-var myTurn = false;
-var isFollowingMouse = false;
-   
-function vh_sceneLoaded(sceneIndex, portal) {
+
+function pushTestCommands() {
+    if (json_file.length == 0){
+        json_file.push(
+            { "text": "Hello, this is the first message." },
+            { "text": "Here's another thing I have to say!" },
+            { "text": "Testing message three, let's see how this works." },
+            { "text": "Almost done, this is message four." },
+            { "text": "Final message in the queue. Let's go!" }
+        );
+    }
+    console.log("Added test messages to json_file:", json_file);
+}
+
+function vh_sceneLoaded() {
     console.log("Initializing DEV");
-    sayText('Welcome to our text to speech A P I example', 3, 1, 3);
 
-    // sleepMode();
-    setInterval(function() {
-        setTimeout(async () => {
-            FetchGeneratedJSON();
-            if (json_file.length>0 && !speaking) {
-                speaking = true;
-                curr_command = json_file[curr_command_index];
+    pushTestCommands();
 
-                console.log(`Executing command ${curr_command_index}`);
-                if (curr_command?.mode == "introspection") {
-                    console.log("I will wait to speak")
-                    await waitToSpeak();
-                }
-                execute_command(curr_command, portal);
-            }
-        }, 5000)
-    }, 2000)
-    if (!isFollowingMouse) {
-        isFollowingMouse = true;
-        document.addEventListener('mousemove', trackMouse);
+    setInterval(() => {
+        FetchGeneratedJSON(); 
+        processQueue(); 
+    }, 2000);
+}
+
+function processQueue() {
+    if (json_file.length > 0 && !speaking) {
+        speaking = true;
+        var curr_command = json_file.shift();
+
+        execute_command(curr_command);
     }
 }
 
-async function vh_audioStarted(portal) {
-    if (curr_command?.mode == "introspection") {
-        await WriteToIntrospectionFile("", avatarID);
+async function execute_command(command) {
+    if (command?.text) {
+        console.log("Speaking:", command.text);
+        await sayText(command.text, 3, 1, 3);
     }
-}
-
-async function vh_audioEnded(portal) {
-    console.log(`Finished command ${curr_command_index}`)
-    if (curr_command?.mode == "introspection") {
-        await WriteToIntrospectionFile(avatarID, "");
-        myTurn = false;
-    }
-
-    curr_command_index += 1;
-    curr_command = json_file[curr_command_index];
-    console.log(`Executing command ${curr_command_index}`)
-
-    if (curr_command?.mode == "introspection") {
-        console.log("I will wait to speak")
-        await waitToSpeak();
-    }
-
-    if (!curr_command) {
-        speaking=false;
-        curr_command_index=0;
-        json_file = [];
-        if (curr_command?.mode == "introspection") {
-            await WriteToIntrospectionFile("", "");
-            myTurn = false;
-        }
-        return;
-    }
-
-    execute_command(curr_command, portal);
-
-}
-
-function execute_command(command, portal) {
-    change_background_image(command?.background);
-    if (command["text"]) {
-        sayText(command["text"], ...voice_array, command.voice?.effect, command.voice?.intensity);
-    } else {
-        vh_audioEnded(portal);
-    };    
-    change_emotion(command?.expression);
-    change_gaze_direction(command?.gaze);
-}
-
-function initialize_avatar(id, name, voice) {
-    voice_array = voice
-    avatarID = name
-    if (avatarID.includes("left")) {
-        waitingDirection = "right"
-    } else if (avatarID.includes("right")) {
-        waitingDirection = "left"
-    }
+    speaking = false;
 }
 
 function FetchGeneratedJSON() {
-	console.log(avatarID)
-    fetch('https://api.the-singularity-show.com/api/latest/', { 
-    method: 'POST',
-    body: JSON.stringify({
-        file: String(avatarID),
-    }),
-    headers: {
-        "Content-Type": "application/json"
-    }
-})
-.then(response => {
-    if (response.ok) {
-        return response.json();
-    } else {
-        throw new Error('File not found');
-    }
-})
-.then(response => {
-    json_file = json_file.concat(response.content)
-    if (json_file.length==0) {
-        speaking=false;
-        console.log(`I am ready to speak: ${!speaking}`);
-    }
-    console.log("JSON :", json_file)
-})
-}
-
-async function WriteToIntrospectionFile(done_str, started_str) {
-    fetch("https://api.the-singularity-show.com/api/write/", {
-    method: "POST",
-    body: JSON.stringify({
-        file: "introspection",
-        content: {
-            done: done_str,
-            started: started_str
-        }
-    }),
-    headers: {
-        "Content-Type": "application/json"
-    }
-})
-.then((response) => response.json())
-.then((json) => {console.log(json); console.log(done_str, started_str);})
-}
-
-
-function change_background_image(url_str) {
-    setBackground('')
-    if (url_str) {
-        url = `url(${url_str})`
-        if (url_str=="none") {
-            url = ""
-        }
-        document.getElementById("sitepal_window").style.backgroundImage = url
-        document.getElementById("sitepal_window").style.backgroundRepeat = "no-repeat"
-        document.getElementById("sitepal_window").style.backgroundSize = "cover"  
-    }
-}
-
-function change_gaze_direction(direction){
-    console.log(`Gaze Direction: ${direction}`)
-    if (direction == "right"){
-        setGaze(90, 120, 100);
-    }
-    else if (direction == "left"){
-        setGaze(270, 120, 100);
-    }
-    else if (direction == "up") {
-        setGaze(0, 120, 100);
-    }
-    else if (direction == "down"){
-        setGaze(180, 120, 100);
-    }
-    else if (direction == "center"){
-        recenter();
-    }
-}
-
-
-function change_emotion(emotion) {
-    console.log(`Emotion: ${emotion}`)
-    if (emotion) {
-        setFacialExpression(emotion,1,-1);
-    } else {
-        setFacialExpression("None",1,-1);
-    }
-}
-
-const sleep = ms => new Promise(res => setTimeout(res, ms))
-
-async function waitToSpeak() {
-    while (!myTurn) {
-        change_emotion("ClosedSmile");
-        change_gaze_direction(waitingDirection);
-        await sleep(200);
-        await updateMyTurn();
-    }
-}
-
-async function updateMyTurn() {
-    fetch('https://api.the-singularity-show.com/api/read/', { 
-        method: 'POST',
-        body: JSON.stringify({
-            file: "introspection",
-        }),
-        headers: {
-            "Content-Type": "application/json"
-        }
+    fetch("https://api.the-singularity-show.com/api/latest/", {
+        method: "POST",
+        body: JSON.stringify({ file: "avatar" }),
+        headers: { "Content-Type": "application/json" }
     })
+    .then(response => response.ok ? response.json() : Promise.reject("File not found"))
     .then(response => {
-        if (response.ok) {
-            return response.json();
-        } else {
-            throw new Error('File not found');
-        }
+        json_file = json_file.concat(response.content);
+        console.log("Updated JSON queue:", json_file);
     })
-    .then(response => {
-        // It is my turn if:
-        //  a) I have started speaking (first to go will be labeled as started)
-        //       OR
-        //  b) Some other avatar has finished speaking
-        
-        myTurn = (response?.content?.started == avatarID) ||
-                 (!!response?.content?.done && response?.content?.done != avatarID);
-
-        })
-}
-
-function changeScene(avatar) {
-    if (avatar=="human") {
-        loadSceneByID(2756583)
-    } else {
-        loadSceneByID(2756584)
-    } 
-}
-
-function sleepMode() {
-    change_gaze_direction("down")
-    change_emotion("Blink")
-}
-function trackMouse(event) {
-    const mouseX = event.clientX;
-    const mouseY = event.clientY;
-
-    // Convert mouse coordinates to gaze direction
-    const gazeDirection = convertMouseToGaze(mouseX, mouseY);
-
-    // Set the gaze
-    setGaze(gazeDirection.yaw, gazeDirection.pitch, 100); // Assuming 100 is the default intensity
-}
-
-function convertMouseToGaze(mouseX, mouseY) {
-    // Get the dimensions of the viewport (or the area where the avatar is)
-    const viewportWidth = window.innerWidth;
-    const viewportHeight = window.innerHeight;
-
-    // Normalize mouse coordinates to -1 to 1
-    const normalizedMouseX = (mouseX / viewportWidth) * 2 - 1;
-    const normalizedMouseY = -((mouseY / viewportHeight) * 2 - 1); // Invert Y because screen Y increases downwards
-
-    // Assuming -1 to 1 maps to a range of -90 to 90 for yaw and -45 to 45 for pitch
-    const yaw = normalizedMouseX * 90;
-    const pitch = normalizedMouseY * 45;
-
-    return { yaw, pitch };
+    .catch(error => console.error("API Error:", error));
 }
